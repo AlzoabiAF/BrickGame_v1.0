@@ -20,18 +20,20 @@ endif
 all: clean s21_string.a test gcov_report
 
 
-s21_string.a: ${OBJS_FUNC}
-	ar rc ${BUILD_DIR}/s21_string.a ${OBJS_FUNC}
-	ranlib ${BUILD_DIR}/s21_string.a
+install:
+
+
+uninstall:
+
+
+dvi:
 	
 
-test:  s21_string.a ${OBJS_TEST}
-	${CC} ${FLAGS} ${GCOV_FLAGS} ${OBJS_TEST} ${BUILD_DIR}/s21_string.a  -o ${BUILD_DIR}/test ${TEST_FLAGS}
-	./${BUILD_DIR}/test
+test:  
 
-${BUILD_DIR}/%.o: %.c
-	mkdir -p $(dir $@)
-	$(CC) $(FLAGS) -c $< -o $@ 
+
+clean:
+	${CLEAN}
 	
 
 clang-format:
@@ -40,6 +42,8 @@ clang-format:
 valgrind:
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./${BUILD_DIR}/test
 
-clean:
-	${CLEAN}
 
+
+${BUILD_DIR}/%.o: %.c
+	mkdir -p $(dir $@)
+	$(CC) $(FLAGS) -c $< -o $@ 
