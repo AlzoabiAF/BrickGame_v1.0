@@ -13,9 +13,6 @@ void initGui() {
 void printGame(GameInfo game) {
     printField(game);
 
-    print()
-
-    handleDelay
 }
 
 void printField(GameInfo game) {
@@ -38,8 +35,7 @@ void printField(GameInfo game) {
 
 UserAction getActions() {
     UserAction action = 0;
-    ch = getch();
-    
+    char ch = getch();
     switch (ch) {
         case 'w':
             action = Up;
@@ -58,5 +54,5 @@ UserAction getActions() {
         default:
             action = Action;
     }   
-    return action
+    return action;
 }
