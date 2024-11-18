@@ -1,22 +1,22 @@
 #include "tetris.h"
 
 
-void freeGame(Game *tetg) {
-  if (tetg) {
-    if (tetg->figure != NULL) freeFigure(tetg->figure);
-    freeField(tetg->field);
-    freeFiguresT(tetg->figurest);
-    freeTemplates(tetg->tet_templates);
-    free(tetg->player);
-    free(tetg);
+void freeGame(Game *game) {
+  if (game) {
+    if (game->figure != NULL) freeFigure(game->figure);
+    freeField(game->field);
+    freeFiguresT(game->figurest);
+    freeTemplates(game->tet_templates);
+    free(game->player);
+    free(game);
   }
 }
 
-void freeField(Field *tetf) {
-  if (tetf) {
-    for (int i = 0; i < tetf->height; i++) free(tetf->blocks[i]);
-    free(tetf->blocks);
-    free(tetf);
+void freeField(Field *field) {
+  if (field) {
+    for (int i = 0; i < field->height; i++) free(field->blocks[i]);
+    free(field->blocks);
+    free(field);
   }
 }
 

@@ -6,11 +6,12 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define FIELD_HEIGHT 10
+#define FIELD_WIDTH 10
 #define FIELD_HEIGHT 20
 #define FIGURE_WIDTH 4
-#define FIGURE_HEIGHT
+#define FIGURE_HEIGHT 2
 #define FIGURES_COUNT 7
+#define TICKS 30
 
 typedef enum GameState{ 
   Start, 
@@ -33,8 +34,16 @@ typedef enum UserAction{
   Action
 } UserAction;
 
-typedef struct GameInfo{
-  int field;
+typedef struct Game {
+  GameInfo *gameInfo;
+  Field *field;
+  Figure *figure;
+  FiguresT *figurest;
+  Player *player;
+} Game;
+
+typedef struct GameInfo {
+  int **field;
   int next;
   int score;
   int high_score;
@@ -47,8 +56,6 @@ typedef struct GameInfo{
 } GameInfo;
 
 typedef struct Field {
-  int width;
-  int height;
   Block **blocks;
 } Field;
 
@@ -59,13 +66,10 @@ typedef struct {
 typedef struct Figure {
   int x;
   int y;
-  int size;
   Block **blocks;
 } Figure;
 
 typedef struct FiguresT {
-  int count;
-  int size;
   Block **blocks;
 } FiguresT;
 
@@ -73,28 +77,23 @@ typedef struct Player {
   int action;
 } Player;
 
-typedef struct {
-  GameInfo *gameInfo;
-  Field *field;
-  Figure *figure;
-  FiguresT *figurest;
-  Player *player;
-  Block **templates;
-} Game;
 
-
- 
 // init object
-Game *createGame(int field_width, int field_height, int figures_size, int count);
-Field *createField(int width, int height);
-Block **createTemplates();
-FiguresT *createFiguresT(int count, int figures_size, Block **figures_template);
-Figure *createFigure(Game *tetg);
-int **createPrintField(int width, int height);
-int **createNextBlock(int size);
-
+Game *initGame();
+GameInfo *createGameInfo();
+Field *createField();
+Figure *createFigure();
+FiguresT *createFiguresT(Block **figures_template);
+Player *createPlayer();
+int **createNextBlock(Game *game);
 
 // free object
+
+
+
+// highScore
+void saveHighScore(int high_score);
+int loadHighScore();
 
 
 
