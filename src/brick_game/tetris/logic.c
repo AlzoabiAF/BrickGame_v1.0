@@ -26,11 +26,12 @@ void calculation(Game *game) {
   // TODO: implement calculation
 
   // TODO: FPS
+
   switch (game->player->action) {
     case Pause:
-
+      pause(game);
     case Up:
-      up(game);
+      rotate(game);
     case Down:
       down(game);
     case Left:
@@ -41,19 +42,26 @@ void calculation(Game *game) {
       game->gameInfo->state = GameOver;
       break;
   }
-  tetg->ticks_left--;
+  game->ticks_left--;
 }
 
 bool collision(Game *game) {
-  // TODO: implement collision
-}
+  Field *field = game->field;
+  Figure *figure = game->figure; 
 
-int eraseLines(Game *game) {
-  // TODO: implement eraseLines
-}
+  for (int i = 0; i < FIGURE_HEIGHT && game->gameInfo->state != Collision; ++i)
+    for (int j = 0; j < FIGURE_WIDTH && game->gameInfo->state != Collision; ++j){
+        if (figure->blocks[i][j].block){
+            int fx = figure->x + j;
+            int fy = figure->y + i;
+            if (fx < 0 || fx >= field->width || fy < 0 || fy >= field->height)
+                game->gameInfo->state = Collision;
 
-void dropLine(Game *game) {
-  // TODO: implement dropLine
+            if (field->blocks[fy][fx].block) 
+                game->gameInfo->state = Collision;
+        }
+    }
+  return game->gameInfo->state == Collision;
 }
 
 void countScore(Game *game) {
@@ -86,12 +94,43 @@ void countScore(Game *game) {
   }
 }
 
-void pause(Game *game){
-  
+int eraseLines(Game *game) {
+  Field *field = game->field;
+  int count = 0;
+  for (int i = FIELD_HEIGHT - 1; i >= 0; i--) {
+    while (lineFilled(i, field)) {
+      dropLine(i, field);
+      count++;
+    }
+  }
+  return count;
 }
 
-void up(Game *game) {
-  if (!game->gameInfo->pause && !collision(game)) game->figure->y--;
+bool lineFilled(int i, Field *field) {
+  bool flag = true  
+  for (int j = 0; j < tfl->width && flag; j++)
+    if (!field->blocks[i][j].block) flag = false;
+  return flag;
+}
+
+void dropLine(int i, Field *field) {
+  if (i == 0)
+    for (int j = 0; j < FIGURE_WIDTH; j++) field->blocks[i][j].block = 0;
+  else {
+    for (int k = i; k > 0; k--)
+      for (int j = 0; j < FIGURE_WIDTH; j++)
+        field->blocks[k][j].b = field->blocks[k - 1][j].block;
+  }
+}
+
+void pause(Game *game) {
+  if (game->pause) {
+    game->pause = 0;
+    game->state = MOVING;
+  } else {
+    game->pause = 1;
+    game->state = PAUSE;
+  }
 }
 
 void down(Game *game) {
@@ -104,4 +143,29 @@ void left(Game *game) {
 
 void right(Game *game) {
   if (!game->gameInfo->pause && !collision(game)) game->figure->x++;
+}
+
+void rotate(Game *game) {
+  if (!game->gameInfo->pause)  {
+    Figure *pastFigure = game->figure;
+    game->figure = rotationFigure(game);
+    if (collision(game)){
+        free(game->figure);
+        game->figure = pastFigure;
+    } else {
+        free(pastFigure);
+    }
+  }
+}
+
+Figure *rotationFigure(Game *game) {
+  Figure *figure = createFigure(game);
+  figure->x = game->figure->x;
+  figure->y = game->figure->y;
+
+  for (int i = 0; i < FIGURE_HEIGHT; ++i)
+    for (int j = 0; j < FIGURE_WIDTH; ++j)
+      figure->blocks[i][j].b = game->figure->blocks[j][FIGURE_WIDTH - 1 - i].b;
+
+  return figure;
 }

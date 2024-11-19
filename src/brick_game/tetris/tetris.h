@@ -98,4 +98,18 @@ void freeNextBlock(int **next);
 void saveHighScore(int high_score);
 int loadHighScore();
 
+//logic
+void userInput(Game *game, UserAction *action, bool hold);
+void calculation(Game *game);
+bool collision(Game *game);
+int eraseLines(Game *game);
+void dropLine(Game *game);
+void countScore(Game *game);
+void pause(Game *game);
+void rotate(Game *game);
+void down(Game *game);
+void left(Game *game);
+void right(Game *game);
+Figure *rotationFigure(Game *game);
+
 #endif
