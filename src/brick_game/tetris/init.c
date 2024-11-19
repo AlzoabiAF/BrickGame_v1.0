@@ -6,26 +6,26 @@ Game *initGame() {
 
   game->gameInfo = createGameInfo();
   game->field = createField();
-  game->figure = createFigure(); //TODO: optimization
+  game->figure = createFigure();  // TODO: optimization
   game->figurest = createFiguresT();
   game->player = createPlayer();
-  
+
   dropNewFigure(game);
 
   return game;
 }
 
 GameInfo *createGameInfo() {
-  GameInfo *gameInfo = (GameInfo *)malloc(sizeof(GameInfo));
+  GameInfo *gameInfo = (GameInfo *)smalloc(sizeof(GameInfo));
   gameInfo->score = 0;
   gameInfo->high_score = loadHighScore();
   gameInfo->ticks_left = 30;
   gameInfo->speed = 1;
   gameInfo->level = 1;
   gameInfo->state = Start;
-  gameInfo->next = rand() % FIGURES_COUNT;
+  gameInfo->nextID = rand() % FIGURES_COUNT;
 
-  return game;
+  return gameInfo;
 }
 
 Field *createField() {
@@ -77,7 +77,7 @@ Player *createPlayer() {
   player->action = Start;
 }
 
-int **createPrintField() {
+int **createPrintField(Game *game) {
   int **print_field = (int **)malloc(FIELD_HEIGHT * sizeof(int *));
   for (int i = 0; i < FIELD_HEIGHT; i++) {
     print_field[i] = (int *)malloc(FIELD_WIDTH * sizeof(int));
@@ -110,7 +110,8 @@ int **createNextBlock(Game *game) {
     next[i] = (int *)malloc(FIGURE_WIDTH * sizeof(int));
     for (int j = 0; j < FIGURE_WIDTH; j++) {
       next[i][j] =
-          game->figurest->blocks[game->gameInfo->next][i * FIGURE_WIDTH + j];
+          game->figurest->blocks[game->gameInfo->next][i * FIGURE_WIDTH + j]
+              .block;
     }
   }
   return next;

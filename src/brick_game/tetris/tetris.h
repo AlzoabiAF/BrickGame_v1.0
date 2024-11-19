@@ -3,8 +3,8 @@
 
 #include <stdbool.h>
 #include <stdio.h>
-#include <time.h>
 #include <stdlib.h>
+#include <time.h>
 
 #define FIELD_WIDTH 10
 #define FIELD_HEIGHT 20
@@ -13,17 +13,17 @@
 #define FIGURES_COUNT 7
 #define TICKS 30
 
-typedef enum GameState{ 
-  Start, 
+typedef enum GameState {
+  Start,
   Spawn,
   Reached,
-  Moving, 
-  Collision, 
-  Pause, 
-  GameOver 
+  Moving,
+  Collision,
+  Pause,
+  GameOver
 } GameState;
 
-typedef enum UserAction{
+typedef enum UserAction {
   Start,
   Pause,
   Terminate,
@@ -43,8 +43,7 @@ typedef struct Game {
 } Game;
 
 typedef struct GameInfo {
-  int **field;
-  int next;
+  int nextID;
   int score;
   int high_score;
   int level;
@@ -59,7 +58,7 @@ typedef struct Field {
   Block **blocks;
 } Field;
 
-typedef struct {
+typedef struct Block {
   int block;
 } Block;
 
@@ -77,7 +76,6 @@ typedef struct Player {
   int action;
 } Player;
 
-
 // init object
 Game *initGame();
 GameInfo *createGameInfo();
@@ -88,13 +86,16 @@ Player *createPlayer();
 int **createNextBlock(Game *game);
 
 // free object
-
-
+void freeGame(Game *game);
+void freeGameInfo(GameInfo *gameInfo);
+void freeField(Field *field);
+void freeFigure(Figure *figure);
+void freeFiguresT(FiguresT *figureT);
+void freePrintField(int **print_field);
+void freeNextBlock(int **next);
 
 // highScore
 void saveHighScore(int high_score);
 int loadHighScore();
-
-
 
 #endif

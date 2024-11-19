@@ -3,7 +3,6 @@
 
 #include <ncurses.h>
 
-
 void initGui();
 void
 
