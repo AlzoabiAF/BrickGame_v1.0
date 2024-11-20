@@ -13,15 +13,15 @@ void initGui() {
 
 void printGame(GameInfo game) { printField(game); }
 
-void printField(GameInfo game) {
+void printField(GameInfo gameInfo) {
   mvwprintw(stdscr, 1, 10, "TETRIS");
   mvwprintw(stdscr, 3, 26, "Next figure:");
-  mvwprintw(stdscr, 11, 26, "Lvl: %d", game.level);
-  mvwprintw(stdscr, 13, 26, "Speed: %d", game.speed);
-  mvwprintw(stdscr, 15, 26, "Score: %d", game.score);
+  mvwprintw(stdscr, 11, 26, "Lvl: %d", gameInfo.level);
+  mvwprintw(stdscr, 13, 26, "Speed: %d", gameInfo.speed);
+  mvwprintw(stdscr, 15, 26, "Score: %d", gameInfo.score);
   clrtoeol();
-  mvwprintw(stdscr, 17, 26, "High score: %d", game.high_score);
-  if (game.pause) mvwprintw(stdscr, 12, 2, "Press ENTER to play.");
+  mvwprintw(stdscr, 17, 26, "High score: %d", gameInfo.high_score);
+  if (gameInfo.pause) mvwprintw(stdscr, 12, 2, "Press ENTER to play.");
   mvwprintw(stdscr, 24, 6, "Press:");
   mvwprintw(stdscr, 24, 14, "Start: 'Enter'");
   mvwprintw(stdscr, 25, 14, "Pause: 'p'");

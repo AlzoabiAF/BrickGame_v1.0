@@ -27,6 +27,8 @@ uninstall:
 
 
 dvi:
+
+dist:
 	
 
 test:  
