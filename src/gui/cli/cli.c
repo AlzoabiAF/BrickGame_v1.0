@@ -1,9 +1,9 @@
 #include "cli.h"
 
-#include "../../brick_game/tetris/tetris.h"
+
 
 void initGui() {
-  initsrc();
+  initscr();
   curs_set(0);
   cbreak();
   noecho();
@@ -36,21 +36,29 @@ UserAction getActions() {
   char ch = getch();
   switch (ch) {
     case 'w':
-      action = Up;
+      action = UP;
+      break;
     case 's':
-      action = Down;
+      action = DOWN;
+      break;
     case 'a':
-      action = Left;
+      action = LEFT;
+      break;
     case 'd':
-      action = Right;
+      action = RIGHT;
+      break;
     case '\n':
-      action = Start;
+      action = START;
+      break;
     case 'p':
-      action = Pause;
+      action = PAUSE;
+      break;
     case 'q':
-      action = Terminate;
+      action = TERMINATE;
+      break;
     default:
-      action = Action;
+      action = ACTION;
+      break;
   }
   return action;
 }

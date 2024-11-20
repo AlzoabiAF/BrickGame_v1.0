@@ -15,52 +15,32 @@
 
 typedef enum GameState {
   Start,
+  Pause,
   Spawn,
   Reached,
   Moving,
   Collision,
-  Pause,
   GameOver
 } GameState;
 
 typedef enum UserAction {
-  Start,
-  Pause,
-  Terminate,
-  Left,
-  Right,
-  Up,
-  Down,
-  Action
+  START,
+  PAUSE,
+  TERMINATE,
+  LEFT,
+  RIGHT,
+  UP,
+  DOWN,
+  ACTION
 } UserAction;
-
-typedef struct Game {
-  GameInfo *gameInfo;
-  Field *field;
-  Figure *figure;
-  FiguresT *figurest;
-  Player *player;
-} Game;
-
-typedef struct GameInfo {
-  int nextID;
-  int score;
-  int high_score;
-  int level;
-  int speed;
-  int pause;
-  int ticks_left;
-  int ticks;
-  GameState state;
-} GameInfo;
-
-typedef struct Field {
-  Block **blocks;
-} Field;
 
 typedef struct Block {
   int block;
 } Block;
+
+typedef struct Field {
+  Block **blocks;
+} Field;
 
 typedef struct Figure {
   int x;
@@ -76,12 +56,34 @@ typedef struct Player {
   int action;
 } Player;
 
+typedef struct GameInfo {
+  int nextID;
+  int score;
+  int high_score;
+  int level;
+  int speed;
+  int pause;
+  int ticks_left;
+  int ticks;
+  GameState state;
+} GameInfo;
+
+typedef struct Game {
+  GameInfo *gameInfo;
+  Field *field;
+  Figure *figure;
+  FiguresT *figurest;
+  Player *player;
+} Game;
+
+
+
 // init object
 Game *initGame();
 GameInfo *createGameInfo();
 Field *createField();
 Figure *createFigure();
-FiguresT *createFiguresT(Block **figures_template);
+FiguresT *createFiguresT();
 Player *createPlayer();
 int **createNextBlock(Game *game);
 
@@ -99,17 +101,19 @@ void saveHighScore(int high_score);
 int loadHighScore();
 
 //logic
-void userInput(Game *game, UserAction *action, bool hold);
+void dropNewFigure(Game *game);
+void userInput(Game *game,  int action, bool hold);
 void calculation(Game *game);
 bool collision(Game *game);
 int eraseLines(Game *game);
-void dropLine(Game *game);
-void countScore(Game *game);
+bool lineFilled(int i, Field *field);
+void dropLine(int i, Field *field);
 void pause(Game *game);
 void rotate(Game *game);
 void down(Game *game);
 void left(Game *game);
 void right(Game *game);
 Figure *rotationFigure(Game *game);
+void countScore(Game *game);
 
 #endif

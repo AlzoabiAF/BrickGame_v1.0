@@ -16,7 +16,7 @@ Game *initGame() {
 }
 
 GameInfo *createGameInfo() {
-  GameInfo *gameInfo = (GameInfo *)smalloc(sizeof(GameInfo));
+  GameInfo *gameInfo = (GameInfo *)malloc(sizeof(GameInfo));
   gameInfo->score = 0;
   gameInfo->high_score = loadHighScore();
   gameInfo->ticks_left = 30;
@@ -49,13 +49,13 @@ Figure *createFigure() {
   for (int i = 0; i < FIGURE_HEIGHT; i++) {
     figure->blocks[i] = (Block *)malloc(sizeof(Block) * FIGURE_WIDTH);
     for (int j = 0; j < FIGURE_WIDTH; j++) {
-      figure->blocks[i][j].b = 0;
+      figure->blocks[i][j].block = 0;
     }
   }
   return figure;
 }
 
-FiguresT *createFiguresT(Block **figures_template) {
+FiguresT *createFiguresT() {
   FiguresT *figurest = (FiguresT *)malloc(sizeof(FiguresT));
 
   Block **templates = malloc(7 * sizeof(Block *));
@@ -74,7 +74,8 @@ FiguresT *createFiguresT(Block **figures_template) {
 
 Player *createPlayer() {
   Player *player = (Player *)malloc(sizeof(Player));
-  player->action = Start;
+  player->action = START;
+  return player;
 }
 
 int **createPrintField(Game *game) {
@@ -96,7 +97,7 @@ int **createPrintField(Game *game) {
         int y = i - figure->y;
 
         if (x >= 0 && x < FIGURE_WIDTH && y >= 0 && y < FIGURE_HEIGHT)
-          if (figure->blocks[y][x] != 0) sym = 1;
+          if (figure->blocks[y][x].block != 0) sym = 1;
       }
       print_field[i][j] = sym;
     }
@@ -110,7 +111,7 @@ int **createNextBlock(Game *game) {
     next[i] = (int *)malloc(FIGURE_WIDTH * sizeof(int));
     for (int j = 0; j < FIGURE_WIDTH; j++) {
       next[i][j] =
-          game->figurest->blocks[game->gameInfo->next][i * FIGURE_WIDTH + j]
+          game->figurest->blocks[game->gameInfo->nextID][i * FIGURE_WIDTH + j]
               .block;
     }
   }
