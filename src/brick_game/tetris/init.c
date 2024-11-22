@@ -111,7 +111,7 @@ int **createNextBlock(Game *game) {
     next[i] = (int *)malloc(FIGURE_WIDTH * sizeof(int));
     for (int j = 0; j < FIGURE_WIDTH; j++) {
       next[i][j] =
-          game->figurest->blocks[game->gameInfo->nextID][i * FIGURE_WIDTH + j]
+          game->figurest->blocks[game->gameInfo->nextID][i * FIGURE_HEIGHT + j]
               .block;
     }
   }

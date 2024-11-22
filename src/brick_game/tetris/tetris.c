@@ -3,21 +3,20 @@
 #include "../../gui/cli/cli.h"
 
 int main() {
+  struct timespec sp_start, sp_end = {0, 0};
   srand(time(NULL));
   initGui();
   Game *game = initGame();
 
-  while (tetg->state != GAMEOVER) {
+  while (game->gameInfo->state != GameOver) {
     clock_gettime(CLOCK_MONOTONIC, &sp_start);
-    userInput(getAction(), 0);
+    getActions(game);
 
-    GameInfo_t game_info = updateCurrentState();
+    calculate(game);
 
-    if (tetg->state == GAMEOVER) {
-      freeGui(game_info, tetg->figurest->size, tetg->field->height);
-      continue;
-    } else
-      printGame(game_info, sp_start, sp_end);
+    if (game->gameInfo->state == GameOver) {
+      printGame(game, sp_start, sp_end);
+    }    
   };
 
   freeGame(game);

@@ -53,7 +53,7 @@ typedef struct FiguresT {
 } FiguresT;
 
 typedef struct Player {
-  int action;
+  UserAction action;
 } Player;
 
 typedef struct GameInfo {
@@ -102,8 +102,8 @@ int loadHighScore();
 
 //logic
 void dropNewFigure(Game *game);
-void userInput(Game *game,  int action, bool hold);
-void calculation(Game *game);
+void updateCurrentState(Game *game);
+void calculate(Game *game);
 bool collision(Game *game);
 int eraseLines(Game *game);
 bool lineFilled(int i, Field *field);

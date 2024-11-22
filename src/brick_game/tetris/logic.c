@@ -1,8 +1,5 @@
 #include "tetris.h"
 
-void userInput(Game *game, int action, bool hold) {
-  if (hold) game->player->action = action;
-}
 
 void dropNewFigure(Game *game) {
   Figure *figure = createFigure(game);
@@ -22,7 +19,7 @@ void dropNewFigure(Game *game) {
   game->gameInfo->nextID = rand() % FIGURES_COUNT;
 }
 
-void calculation(Game *game) {
+void calculate(Game *game) {
   // TODO: implement calculation
 
   // TODO: FPS
@@ -45,6 +42,8 @@ void calculation(Game *game) {
       break;
     case TERMINATE:
       game->gameInfo->state = GameOver;
+      break;
+    default:
       break;
   }
   game->gameInfo->ticks_left--;
