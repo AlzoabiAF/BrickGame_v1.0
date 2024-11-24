@@ -6,11 +6,12 @@ Game *initGame() {
 
   game->gameInfo = createGameInfo();
   game->field = createField();
-  game->figure = createFigure();  // TODO: optimization
+  game->figure = createFigure();
   game->figurest = createFiguresT();
   game->player = createPlayer();
 
   dropNewFigure(game);
+  game->gameInfo->nextID = rand() % FIGURES_COUNT;
 
   return game;
 }
@@ -19,10 +20,12 @@ GameInfo *createGameInfo() {
   GameInfo *gameInfo = (GameInfo *)malloc(sizeof(GameInfo));
   gameInfo->score = 0;
   gameInfo->high_score = loadHighScore();
+  gameInfo->ticks = 30;
   gameInfo->ticks_left = 30;
   gameInfo->speed = 1;
   gameInfo->level = 1;
   gameInfo->state = Start;
+  gameInfo->pause = 1;
   gameInfo->nextID = rand() % FIGURES_COUNT;
 
   return gameInfo;
@@ -43,22 +46,57 @@ Field *createField() {
 
 Figure *createFigure() {
   Figure *figure = (Figure *)malloc(sizeof(Figure));
+  if (!figure) {
+    return NULL; // Если память не выделена, возвращаем NULL
+  }
+
   figure->x = 0;
   figure->y = 0;
+
   figure->blocks = (Block **)malloc(sizeof(Block *) * FIGURE_HEIGHT);
+  if (!figure->blocks) {
+    free(figure);
+    return NULL; // Если память не выделена, освобождаем figure и возвращаем NULL
+  }
+
   for (int i = 0; i < FIGURE_HEIGHT; i++) {
     figure->blocks[i] = (Block *)malloc(sizeof(Block) * FIGURE_WIDTH);
+    if (!figure->blocks[i]) {
+      // Если выделение памяти для строки блоков не удалось, освобождаем уже выделенные
+      for (int k = 0; k < i; k++) {
+        free(figure->blocks[k]);
+      }
+      free(figure->blocks);
+      free(figure);
+      return NULL;
+    }
+
     for (int j = 0; j < FIGURE_WIDTH; j++) {
-      figure->blocks[i][j].block = 0;
+      figure->blocks[i][j].block = 0; // Инициализация блока
     }
   }
+
   return figure;
 }
+
+// Figure *createFigure() {
+//   Figure *figure = (Figure *)malloc(sizeof(Figure));
+//   figure->x = 0;
+//   figure->y = 0;
+//   figure->blocks = (Block **)malloc(sizeof(Block *) * FIGURE_HEIGHT);
+//   for (int i = 0; i < FIGURE_HEIGHT; i++) {
+//     figure->blocks[i] = (Block *)malloc(sizeof(Block) * FIGURE_WIDTH);
+//     for (int j = 0; j < FIGURE_WIDTH; j++) {
+//       figure->blocks[i][j].block = 0;
+//     }
+//   }
+//   return figure;
+// }
 
 FiguresT *createFiguresT() {
   FiguresT *figurest = (FiguresT *)malloc(sizeof(FiguresT));
 
-  Block **templates = malloc(7 * sizeof(Block *));
+  Block **templates = malloc(FIGURES_COUNT * sizeof(Block *));
   templates[0] = &iFigure[0][0];
   templates[1] = &oFigure[0][0];
   templates[2] = &tFigure[0][0];

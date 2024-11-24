@@ -8,6 +8,7 @@ void initGui();
 void printGame(Game *game, struct timespec sp_start,
                struct timespec sp_end);
 void printField(Game *game);
+void printFigure(Game *game);
 void printNextFigure(Game *game);
 void printInfo(GameInfo *gameInfo);
 void handleDelay(struct timespec sp_start, struct timespec sp_end,

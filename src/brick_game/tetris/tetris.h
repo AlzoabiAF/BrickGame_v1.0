@@ -8,19 +8,18 @@
 
 #define FIELD_WIDTH 10
 #define FIELD_HEIGHT 20
-#define FIGURE_WIDTH 4
-#define FIGURE_HEIGHT 2
+#define FIGURE_WIDTH 5
+#define FIGURE_HEIGHT 5
 #define FIGURES_COUNT 7
 #define TICKS 30
 
 typedef enum GameState {
-  Start,
-  Pause,
-  Spawn,
-  Reached,
-  Moving,
-  Collision,
-  GameOver
+  Start, //
+  Pause,//
+  Spawn,//
+  Moving,//
+  Collision,//
+  GameOver//
 } GameState;
 
 typedef enum UserAction {
@@ -29,8 +28,8 @@ typedef enum UserAction {
   TERMINATE,
   LEFT,
   RIGHT,
-  UP,
   DOWN,
+  ROTATE,
   ACTION
 } UserAction;
 
@@ -104,16 +103,19 @@ int loadHighScore();
 void dropNewFigure(Game *game);
 void updateCurrentState(Game *game);
 void calculate(Game *game);
+void calcOne(Game *game);
 bool collision(Game *game);
 int eraseLines(Game *game);
 bool lineFilled(int i, Field *field);
 void dropLine(int i, Field *field);
 void pause(Game *game);
 void rotate(Game *game);
+void up(Game *game);
 void down(Game *game);
 void left(Game *game);
 void right(Game *game);
 Figure *rotationFigure(Game *game);
+void plantFigure(Game *game);
 void countScore(Game *game);
 
 #endif

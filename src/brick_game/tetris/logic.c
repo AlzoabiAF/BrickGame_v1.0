@@ -9,44 +9,65 @@ void dropNewFigure(Game *game) {
   for (int i = 0; i < FIGURE_HEIGHT; ++i) {
     for (int j = 0; j < FIGURE_WIDTH; ++j)
       figure->blocks[i][j].block =
-          game->figurest->blocks[game->gameInfo->nextID][i * FIGURE_HEIGHT + j]
+          game->figurest->blocks[game->gameInfo->nextID][i * FIGURE_WIDTH + j]
               .block;
   }
 
-  if (game->figure) freeFigure(game->figure);
-
+  freeFigure(game->figure);
+  game->figure = NULL;
   game->figure = figure;
   game->gameInfo->nextID = rand() % FIGURES_COUNT;
 }
 
 void calculate(Game *game) {
-  // TODO: implement calculation
-
-  // TODO: FPS
-
-  switch (game->player->action) {
-    case PAUSE:
-      pause(game);
-      break;
-    case UP:
-      rotate(game);
-      break;
-    case DOWN:
-      down(game);
-      break;
-    case LEFT:
-      left(game);
-      break;
-    case RIGHT:
-      right(game);
-      break;
-    case TERMINATE:
-      game->gameInfo->state = GameOver;
-      break;
-    default:
-      break;
+  if (game->gameInfo->ticks_left <= 0 && game->gameInfo->state != Pause && game->gameInfo->state != Start)
+    calcOne(game);  // to slower down 30 fps game
+  if (game->gameInfo->state != GameOver) {
+    switch (game->player->action) {
+      case PAUSE:
+        pause(game);
+        break;
+      case ROTATE:
+        rotate(game);
+        break;
+      case DOWN:
+        down(game);
+        break;
+      case LEFT:
+        left(game);
+        break;
+      case RIGHT:
+        right(game);
+        break;
+      case TERMINATE:
+        game->gameInfo->state = GameOver;
+        break;
+      case Start:
+        game->gameInfo->pause = 0;
+        game->gameInfo->state = Moving;
+        break;
+      default:
+        break;
+    }
+    game->gameInfo->ticks_left--;
   }
-  game->gameInfo->ticks_left--;
+}
+
+void calcOne(Game *game) {
+  game->gameInfo->ticks_left = game->gameInfo->ticks;
+  game->gameInfo->state = Moving;
+  down(game);
+  if (collision(game)) {
+    up(game);
+    plantFigure(game);
+    countScore(game);
+    freeFigure(game->figure);
+    dropNewFigure(game);
+    game->gameInfo->state = Spawn;
+    if (collision(game)) {
+      game->gameInfo->state = GameOver;
+    }
+  }
 }
 
 bool collision(Game *game) {
@@ -58,14 +79,28 @@ bool collision(Game *game) {
         if (figure->blocks[i][j].block){
             int fx = figure->x + j;
             int fy = figure->y + i;
-            if (fx < 0 || fx >= FIELD_WIDTH || fy < 0 || fy >= FIELD_HEIGHT)
+            if (fx < 0 || fx >= FIELD_WIDTH || fy < 0 || fy >= FIELD_HEIGHT )
                 game->gameInfo->state = Collision;
-
-            if (field->blocks[fy][fx].block) 
+            else if (field->blocks[fy][fx].block) {
                 game->gameInfo->state = Collision;
+              }
         }
     }
   return game->gameInfo->state == Collision;
+}
+
+void plantFigure(Game *game) {
+  Figure *figure = game->figure;
+  for (int i = 0; i < FIGURE_HEIGHT; i++)
+    for (int j = 0; j < FIGURE_WIDTH; j++)
+      if (figure->blocks[i][j].block != 0) {
+        int fx = figure->x + j;
+        int fy = figure->y + i;
+        if (fx >= 0 && fx < FIELD_WIDTH && fy >= 0 &&
+            fy < FIELD_HEIGHT) {
+          game->field->blocks[fy][fx].block = figure->blocks[i][j].block;
+        }
+      }
 }
 
 int eraseLines(Game *game) {
@@ -89,10 +124,10 @@ bool lineFilled(int i, Field *field) {
 
 void dropLine(int i, Field *field) {
   if (i == 0)
-    for (int j = 0; j < FIGURE_WIDTH; j++) field->blocks[i][j].block = 0;
+    for (int j = 0; j < FIELD_WIDTH; j++) field->blocks[i][j].block = 0;
   else {
     for (int k = i; k > 0; k--)
-      for (int j = 0; j < FIGURE_WIDTH; j++)
+      for (int j = 0; j < FIELD_WIDTH; j++)
         field->blocks[k][j].block = field->blocks[k - 1][j].block;
   }
 }
@@ -105,6 +140,11 @@ void pause(Game *game) {
     game->gameInfo->pause = 1;
     game->gameInfo->state = Pause;
   }
+}
+
+
+void up(Game *game) {
+  if (!game->gameInfo->pause && !collision(game)) game->figure->y++;
 }
 
 void down(Game *game) {
@@ -139,7 +179,7 @@ Figure *rotationFigure(Game *game) {
 
   for (int i = 0; i < FIGURE_HEIGHT; ++i)
     for (int j = 0; j < FIGURE_WIDTH; ++j)
-      figure->blocks[i][j].block = game->figure->blocks[j][FIGURE_WIDTH - 1 - i].block;
+      figure->blocks[i][j].block = game->figure->blocks[j][FIGURE_HEIGHT - 1 - i].block;
 
   return figure;
 }

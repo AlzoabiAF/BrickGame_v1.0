@@ -21,7 +21,7 @@ void initGui() {
 void printGame(Game *game, struct timespec sp_start,
                struct timespec sp_end) {
   printField(game);
-
+  printFigure(game);
   printNextFigure(game);
 
   printInfo(game->gameInfo);
@@ -40,6 +40,21 @@ void printField(Game *game) {
       attroff(COLOR_PAIR(sym));
     }
   }
+}
+
+void printFigure(Game *game) {
+  Figure *figure = game->figure;
+  for (int i = 0; i < FIGURE_HEIGHT; ++i){
+    for (int j = 0; j < FIGURE_WIDTH; ++j){
+      if (figure->blocks[i][j].block != 0) {
+        attron(COLOR_PAIR(2));
+        mvaddch(i + 3 + figure->y, j * 2 + 2 + figure->x, ' ');
+        mvaddch(i + 3 + figure->y, j * 2 + 3 + figure->x, ' ');
+        attroff(COLOR_PAIR(2));
+      }
+      
+    }
+  } 
 }
 
 void printNextFigure(Game *game) {
@@ -80,6 +95,7 @@ void printInfo(GameInfo *gameInfo) {
   mvwprintw(stdscr, 6, 45, "Arrows to move: 'a' 'd'");
   mvwprintw(stdscr, 7, 45, "Space to rotate");
   mvwprintw(stdscr, 8, 45, "Arrow down to plant: 's'");
+  mvwprintw(stdscr, 10, 45, "%d", gameInfo->state);
   attroff(COLOR_PAIR(5));
 }
 
@@ -98,7 +114,7 @@ void getActions(Game *game) {
   char ch = getch();
   switch (ch) {
     case 'w':
-      game->player->action = UP;
+      game->player->action = ROTATE;
       break;
     case 's':
       game->player->action = DOWN;

@@ -4,7 +4,7 @@
 
 int main() {
   struct timespec sp_start, sp_end = {0, 0};
-  srand(time(NULL));
+  srand((unsigned int)time(NULL));
   initGui();
   Game *game = initGame();
 
@@ -14,8 +14,11 @@ int main() {
 
     calculate(game);
 
-    if (game->gameInfo->state == GameOver) {
+    if (game->gameInfo->state != GameOver) {
       printGame(game, sp_start, sp_end);
+      
+      // printField(game);
+      // refresh();
     }    
   };
 

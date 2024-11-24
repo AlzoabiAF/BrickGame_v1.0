@@ -132,13 +132,14 @@ gui.o: $(FRONT_OBJECTS)
 	@ld -r $^ -o $@
 
 %.o: %.c
-	@$(CC) -c $< -o $@
+	@$(CC) -g -c $< -o $@
 
 valgrind_test: test
 	valgrind --tool=memcheck --leak-check=full ./test
 
 valgrind_tetris: all
-	valgrind --tool=memcheck --leak-check=full ./tetris
+	valgrind --tool=memcheck --leak-check=full --track-origins=yes ./tetris 2> valgrind.log
+ 
 
 clean: clean_tetris clean_tests clean_dvi clean_dist
 	@echo "Cleaned..."
