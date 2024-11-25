@@ -25,7 +25,7 @@ void printGame(Game *game, struct timespec sp_start,
   printNextFigure(game);
 
   printInfo(game->gameInfo);
-
+  mvwprintw(stdscr, 12, 45, "x: %d\ty: %d", game->figure->x, game->figure->y);
   handleDelay(sp_start, sp_end, game->gameInfo->speed);
   refresh();
 }

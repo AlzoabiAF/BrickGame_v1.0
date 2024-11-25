@@ -81,9 +81,8 @@ bool collision(Game *game) {
             int fy = figure->y + i;
             if (fx < 0 || fx >= FIELD_WIDTH || fy < 0 || fy >= FIELD_HEIGHT )
                 game->gameInfo->state = Collision;
-            else if (field->blocks[fy][fx].block) {
+            else if (field->blocks[fy][fx].block)
                 game->gameInfo->state = Collision;
-              }
         }
     }
   return game->gameInfo->state == Collision;
