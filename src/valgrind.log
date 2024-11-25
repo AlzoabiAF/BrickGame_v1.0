@@ -1,171 +1,173 @@
-==155991== Memcheck, a memory error detector
-==155991== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==155991== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
-==155991== Command: ./tetris
-==155991== 
-==155991== Invalid read of size 8
-==155991==    at 0x1095EA: freeFigure (free.c:42)
-==155991==    by 0x109F7C: dropNewFigure (logic.c:16)
-==155991==    by 0x10A170: calcOne (logic.c:65)
-==155991==    by 0x10A011: calculate (logic.c:24)
-==155991==    by 0x10B40C: main (tetris.c:15)
-==155991==  Address 0x4ae8248 is 8 bytes inside a block of size 16 free'd
-==155991==    at 0x484988F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==155991==    by 0x10968A: freeFigure (free.c:52)
-==155991==    by 0x10A164: calcOne (logic.c:64)
-==155991==    by 0x10A011: calculate (logic.c:24)
-==155991==    by 0x10B40C: main (tetris.c:15)
-==155991==  Block was alloc'd at
-==155991==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==155991==    by 0x10993B: createFigure (init.c:48)
-==155991==    by 0x109ECC: dropNewFigure (logic.c:5)
-==155991==    by 0x109792: initGame (init.c:13)
-==155991==    by 0x10B3DD: main (tetris.c:9)
-==155991== 
-==155991== Invalid free() / delete / delete[] / realloc()
-==155991==    at 0x484988F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==155991==    by 0x10968A: freeFigure (free.c:52)
-==155991==    by 0x109F7C: dropNewFigure (logic.c:16)
-==155991==    by 0x10A170: calcOne (logic.c:65)
-==155991==    by 0x10A011: calculate (logic.c:24)
-==155991==    by 0x10B40C: main (tetris.c:15)
-==155991==  Address 0x4ae8240 is 0 bytes inside a block of size 16 free'd
-==155991==    at 0x484988F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==155991==    by 0x10968A: freeFigure (free.c:52)
-==155991==    by 0x10A164: calcOne (logic.c:64)
-==155991==    by 0x10A011: calculate (logic.c:24)
-==155991==    by 0x10B40C: main (tetris.c:15)
-==155991==  Block was alloc'd at
-==155991==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==155991==    by 0x10993B: createFigure (init.c:48)
-==155991==    by 0x109ECC: dropNewFigure (logic.c:5)
-==155991==    by 0x109792: initGame (init.c:13)
-==155991==    by 0x10B3DD: main (tetris.c:9)
-==155991== 
-==155991== 
-==155991== HEAP SUMMARY:
-==155991==     in use at exit: 132,756 bytes in 195 blocks
-==155991==   total heap usage: 433 allocs, 254 frees, 221,641 bytes allocated
-==155991== 
-==155991== 9 bytes in 1 blocks are possibly lost in loss record 8 of 83
-==155991==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==155991==    by 0x497134E: strdup (strdup.c:42)
-==155991==    by 0x489D6A5: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
-==155991==    by 0x48A2278: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
-==155991==    by 0x486FB53: newterm_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x48704D4: newterm (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x4870567: initscr (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x10A967: initGui (cli.c:6)
-==155991==    by 0x10B3D3: main (tetris.c:8)
-==155991== 
-==155991== 24 bytes in 1 blocks are possibly lost in loss record 27 of 83
-==155991==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==155991==    by 0x49E5541: tsearch (tsearch.c:337)
-==155991==    by 0x489D6C7: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
-==155991==    by 0x48A2278: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
-==155991==    by 0x486FB53: newterm_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x48704D4: newterm (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x4870567: initscr (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x10A967: initGui (cli.c:6)
-==155991==    by 0x10B3D3: main (tetris.c:8)
-==155991== 
-==155991== 24 bytes in 1 blocks are possibly lost in loss record 28 of 83
-==155991==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==155991==    by 0x49E5541: tsearch (tsearch.c:337)
-==155991==    by 0x489D6C7: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
-==155991==    by 0x48A2278: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
-==155991==    by 0x48686F7: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x486C50D: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x48805BB: doupdate_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x4870939: wrefresh (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x4874A8B: wgetch (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x10B2B1: getActions (cli.c:114)
-==155991==    by 0x10B400: main (tetris.c:13)
-==155991== 
-==155991== 24 bytes in 1 blocks are possibly lost in loss record 29 of 83
-==155991==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==155991==    by 0x49E5541: tsearch (tsearch.c:337)
-==155991==    by 0x489D6C7: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
-==155991==    by 0x48A2278: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
-==155991==    by 0x4868687: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x48805BB: doupdate_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x4870939: wrefresh (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x4874A8B: wgetch (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x10B2B1: getActions (cli.c:114)
-==155991==    by 0x10B400: main (tetris.c:13)
-==155991== 
-==155991== 56 bytes in 1 blocks are definitely lost in loss record 34 of 83
-==155991==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==155991==    by 0x109ABB: createFiguresT (init.c:99)
-==155991==    by 0x10976C: initGame (init.c:10)
-==155991==    by 0x10B3DD: main (tetris.c:9)
-==155991== 
-==155991== 63 bytes in 1 blocks are possibly lost in loss record 35 of 83
-==155991==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==155991==    by 0x497134E: strdup (strdup.c:42)
-==155991==    by 0x489D6A5: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
-==155991==    by 0x48A2278: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
-==155991==    by 0x48686F7: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x486C50D: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x48805BB: doupdate_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x4870939: wrefresh (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x4874A8B: wgetch (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x10B2B1: getActions (cli.c:114)
-==155991==    by 0x10B400: main (tetris.c:13)
-==155991== 
-==155991== 64 bytes in 1 blocks are possibly lost in loss record 36 of 83
-==155991==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==155991==    by 0x497134E: strdup (strdup.c:42)
-==155991==    by 0x489D6A5: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
-==155991==    by 0x48A2278: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
-==155991==    by 0x4868687: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x48805BB: doupdate_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x4870939: wrefresh (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x4874A8B: wgetch (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x10B2B1: getActions (cli.c:114)
-==155991==    by 0x10B400: main (tetris.c:13)
-==155991== 
-==155991== 168 bytes in 1 blocks are possibly lost in loss record 58 of 83
-==155991==    at 0x484D953: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==155991==    by 0x489D61E: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
-==155991==    by 0x48A2278: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
-==155991==    by 0x486FB53: newterm_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x48704D4: newterm (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x4870567: initscr (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x10A967: initGui (cli.c:6)
-==155991==    by 0x10B3D3: main (tetris.c:8)
-==155991== 
-==155991== 168 bytes in 1 blocks are possibly lost in loss record 59 of 83
-==155991==    at 0x484D953: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==155991==    by 0x489D61E: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
-==155991==    by 0x48A2278: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
-==155991==    by 0x48686F7: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x486C50D: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x48805BB: doupdate_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x4870939: wrefresh (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x4874A8B: wgetch (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x10B2B1: getActions (cli.c:114)
-==155991==    by 0x10B400: main (tetris.c:13)
-==155991== 
-==155991== 168 bytes in 1 blocks are possibly lost in loss record 60 of 83
-==155991==    at 0x484D953: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==155991==    by 0x489D61E: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
-==155991==    by 0x48A2278: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
-==155991==    by 0x4868687: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x48805BB: doupdate_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x4870939: wrefresh (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x4874A8B: wgetch (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
-==155991==    by 0x10B2B1: getActions (cli.c:114)
-==155991==    by 0x10B400: main (tetris.c:13)
-==155991== 
-==155991== LEAK SUMMARY:
-==155991==    definitely lost: 56 bytes in 1 blocks
-==155991==    indirectly lost: 0 bytes in 0 blocks
-==155991==      possibly lost: 712 bytes in 9 blocks
-==155991==    still reachable: 131,988 bytes in 185 blocks
-==155991==         suppressed: 0 bytes in 0 blocks
-==155991== Reachable blocks (those to which a pointer was found) are not shown.
-==155991== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==155991== 
-==155991== For lists of detected and suppressed errors, rerun with: -s
-==155991== ERROR SUMMARY: 42 errors from 12 contexts (suppressed: 0 from 0)
+==135369== Memcheck, a memory error detector
+==135369== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==135369== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==135369== Command: ./tetris
+==135369== 
+==135369== Invalid read of size 8
+==135369==    at 0x10960A: freeFigure (free.c:42)
+==135369==    by 0x109FAC: dropNewFigure (logic.c:25)
+==135369==    by 0x10A1A8: calcOne (logic.c:74)
+==135369==    by 0x10A041: calculate (logic.c:33)
+==135369==    by 0x10B44D: main (tetris.c:15)
+==135369==  Address 0x4af39d8 is 8 bytes inside a block of size 16 free'd
+==135369==    at 0x484988F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==135369==    by 0x1096AA: freeFigure (free.c:52)
+==135369==    by 0x10A19C: calcOne (logic.c:73)
+==135369==    by 0x10A041: calculate (logic.c:33)
+==135369==    by 0x10B44D: main (tetris.c:15)
+==135369==  Block was alloc'd at
+==135369==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==135369==    by 0x10995B: createFigure (init.c:67)
+==135369==    by 0x10A752: rotationFigure (logic.c:188)
+==135369==    by 0x10A6EC: rotate (logic.c:177)
+==135369==    by 0x10A0A4: calculate (logic.c:40)
+==135369==    by 0x10B44D: main (tetris.c:15)
+==135369== 
+==135369== Invalid free() / delete / delete[] / realloc()
+==135369==    at 0x484988F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==135369==    by 0x1096AA: freeFigure (free.c:52)
+==135369==    by 0x109FAC: dropNewFigure (logic.c:25)
+==135369==    by 0x10A1A8: calcOne (logic.c:74)
+==135369==    by 0x10A041: calculate (logic.c:33)
+==135369==    by 0x10B44D: main (tetris.c:15)
+==135369==  Address 0x4af39d0 is 0 bytes inside a block of size 16 free'd
+==135369==    at 0x484988F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==135369==    by 0x1096AA: freeFigure (free.c:52)
+==135369==    by 0x10A19C: calcOne (logic.c:73)
+==135369==    by 0x10A041: calculate (logic.c:33)
+==135369==    by 0x10B44D: main (tetris.c:15)
+==135369==  Block was alloc'd at
+==135369==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==135369==    by 0x10995B: createFigure (init.c:67)
+==135369==    by 0x10A752: rotationFigure (logic.c:188)
+==135369==    by 0x10A6EC: rotate (logic.c:177)
+==135369==    by 0x10A0A4: calculate (logic.c:40)
+==135369==    by 0x10B44D: main (tetris.c:15)
+==135369== 
+==135369== 
+==135369== HEAP SUMMARY:
+==135369==     in use at exit: 96,724 bytes in 155 blocks
+==135369==   total heap usage: 637 allocs, 507 frees, 121,264 bytes allocated
+==135369== 
+==135369== 9 bytes in 1 blocks are possibly lost in loss record 8 of 80
+==135369==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==135369==    by 0x497134E: strdup (strdup.c:42)
+==135369==    by 0x489D6A5: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
+==135369==    by 0x48A2278: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
+==135369==    by 0x486FB53: newterm_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x48704D4: newterm (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x4870567: initscr (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x10A953: initGui (cli.c:6)
+==135369==    by 0x10B414: main (tetris.c:8)
+==135369== 
+==135369== 24 bytes in 1 blocks are possibly lost in loss record 27 of 80
+==135369==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==135369==    by 0x49E5541: tsearch (tsearch.c:337)
+==135369==    by 0x489D6C7: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
+==135369==    by 0x48A2278: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
+==135369==    by 0x486FB53: newterm_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x48704D4: newterm (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x4870567: initscr (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x10A953: initGui (cli.c:6)
+==135369==    by 0x10B414: main (tetris.c:8)
+==135369== 
+==135369== 24 bytes in 1 blocks are possibly lost in loss record 28 of 80
+==135369==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==135369==    by 0x49E5541: tsearch (tsearch.c:337)
+==135369==    by 0x489D6C7: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
+==135369==    by 0x48A2278: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
+==135369==    by 0x48686F7: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x486C50D: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x48805BB: doupdate_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x4870939: wrefresh (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x4874A8B: wgetch (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x10B2F1: getActions (cli.c:118)
+==135369==    by 0x10B441: main (tetris.c:13)
+==135369== 
+==135369== 24 bytes in 1 blocks are possibly lost in loss record 29 of 80
+==135369==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==135369==    by 0x49E5541: tsearch (tsearch.c:337)
+==135369==    by 0x489D6C7: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
+==135369==    by 0x48A2278: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
+==135369==    by 0x4868687: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x48805BB: doupdate_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x4870939: wrefresh (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x4874A8B: wgetch (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x10B2F1: getActions (cli.c:118)
+==135369==    by 0x10B441: main (tetris.c:13)
+==135369== 
+==135369== 56 bytes in 1 blocks are definitely lost in loss record 34 of 80
+==135369==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==135369==    by 0x109A2B: createFiguresT (init.c:83)
+==135369==    by 0x10978C: initGame (init.c:10)
+==135369==    by 0x10B41E: main (tetris.c:9)
+==135369== 
+==135369== 63 bytes in 1 blocks are possibly lost in loss record 35 of 80
+==135369==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==135369==    by 0x497134E: strdup (strdup.c:42)
+==135369==    by 0x489D6A5: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
+==135369==    by 0x48A2278: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
+==135369==    by 0x48686F7: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x486C50D: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x48805BB: doupdate_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x4870939: wrefresh (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x4874A8B: wgetch (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x10B2F1: getActions (cli.c:118)
+==135369==    by 0x10B441: main (tetris.c:13)
+==135369== 
+==135369== 64 bytes in 1 blocks are possibly lost in loss record 36 of 80
+==135369==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==135369==    by 0x497134E: strdup (strdup.c:42)
+==135369==    by 0x489D6A5: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
+==135369==    by 0x48A2278: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
+==135369==    by 0x4868687: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x48805BB: doupdate_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x4870939: wrefresh (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x4874A8B: wgetch (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x10B2F1: getActions (cli.c:118)
+==135369==    by 0x10B441: main (tetris.c:13)
+==135369== 
+==135369== 168 bytes in 1 blocks are possibly lost in loss record 57 of 80
+==135369==    at 0x484D953: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==135369==    by 0x489D61E: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
+==135369==    by 0x48A2278: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
+==135369==    by 0x486FB53: newterm_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x48704D4: newterm (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x4870567: initscr (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x10A953: initGui (cli.c:6)
+==135369==    by 0x10B414: main (tetris.c:8)
+==135369== 
+==135369== 168 bytes in 1 blocks are possibly lost in loss record 58 of 80
+==135369==    at 0x484D953: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==135369==    by 0x489D61E: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
+==135369==    by 0x48A2278: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
+==135369==    by 0x48686F7: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x486C50D: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x48805BB: doupdate_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x4870939: wrefresh (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x4874A8B: wgetch (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x10B2F1: getActions (cli.c:118)
+==135369==    by 0x10B441: main (tetris.c:13)
+==135369== 
+==135369== 168 bytes in 1 blocks are possibly lost in loss record 59 of 80
+==135369==    at 0x484D953: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==135369==    by 0x489D61E: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
+==135369==    by 0x48A2278: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.4)
+==135369==    by 0x4868687: ??? (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x48805BB: doupdate_sp (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x4870939: wrefresh (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x4874A8B: wgetch (in /usr/lib/x86_64-linux-gnu/libncurses.so.6.4)
+==135369==    by 0x10B2F1: getActions (cli.c:118)
+==135369==    by 0x10B441: main (tetris.c:13)
+==135369== 
+==135369== LEAK SUMMARY:
+==135369==    definitely lost: 56 bytes in 1 blocks
+==135369==    indirectly lost: 0 bytes in 0 blocks
+==135369==      possibly lost: 712 bytes in 9 blocks
+==135369==    still reachable: 95,956 bytes in 145 blocks
+==135369==         suppressed: 0 bytes in 0 blocks
+==135369== Reachable blocks (those to which a pointer was found) are not shown.
+==135369== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==135369== 
+==135369== For lists of detected and suppressed errors, rerun with: -s
+==135369== ERROR SUMMARY: 60 errors from 12 contexts (suppressed: 0 from 0)

@@ -46,52 +46,17 @@ Field *createField() {
 
 Figure *createFigure() {
   Figure *figure = (Figure *)malloc(sizeof(Figure));
-  if (!figure) {
-    return NULL; // Если память не выделена, возвращаем NULL
-  }
-
   figure->x = 0;
   figure->y = 0;
-
   figure->blocks = (Block **)malloc(sizeof(Block *) * FIGURE_HEIGHT);
-  if (!figure->blocks) {
-    free(figure);
-    return NULL; // Если память не выделена, освобождаем figure и возвращаем NULL
-  }
-
   for (int i = 0; i < FIGURE_HEIGHT; i++) {
     figure->blocks[i] = (Block *)malloc(sizeof(Block) * FIGURE_WIDTH);
-    if (!figure->blocks[i]) {
-      // Если выделение памяти для строки блоков не удалось, освобождаем уже выделенные
-      for (int k = 0; k < i; k++) {
-        free(figure->blocks[k]);
-      }
-      free(figure->blocks);
-      free(figure);
-      return NULL;
-    }
-
     for (int j = 0; j < FIGURE_WIDTH; j++) {
-      figure->blocks[i][j].block = 0; // Инициализация блока
+      figure->blocks[i][j].block = 0;
     }
   }
-
   return figure;
 }
-
-// Figure *createFigure() {
-//   Figure *figure = (Figure *)malloc(sizeof(Figure));
-//   figure->x = 0;
-//   figure->y = 0;
-//   figure->blocks = (Block **)malloc(sizeof(Block *) * FIGURE_HEIGHT);
-//   for (int i = 0; i < FIGURE_HEIGHT; i++) {
-//     figure->blocks[i] = (Block *)malloc(sizeof(Block) * FIGURE_WIDTH);
-//     for (int j = 0; j < FIGURE_WIDTH; j++) {
-//       figure->blocks[i][j].block = 0;
-//     }
-//   }
-//   return figure;
-// }
 
 FiguresT *createFiguresT() {
   FiguresT *figurest = (FiguresT *)malloc(sizeof(FiguresT));
@@ -114,33 +79,6 @@ Player *createPlayer() {
   Player *player = (Player *)malloc(sizeof(Player));
   player->action = START;
   return player;
-}
-
-int **createPrintField(Game *game) {
-  int **print_field = (int **)malloc(FIELD_HEIGHT * sizeof(int *));
-  for (int i = 0; i < FIELD_HEIGHT; i++) {
-    print_field[i] = (int *)malloc(FIELD_WIDTH * sizeof(int));
-  }
-
-  Field *field = game->field;
-  Figure *figure = game->figure;
-
-  for (int i = 0; i < FIGURE_HEIGHT; i++) {
-    for (int j = 0; j < FIGURE_WIDTH; j++) {
-      int sym = 0;
-      if (field->blocks[i][j].block != 0)
-        sym = 1;
-      else {
-        int x = j - figure->x;
-        int y = i - figure->y;
-
-        if (x >= 0 && x < FIGURE_WIDTH && y >= 0 && y < FIGURE_HEIGHT)
-          if (figure->blocks[y][x].block != 0) sym = 1;
-      }
-      print_field[i][j] = sym;
-    }
-  }
-  return print_field;
 }
 
 int **createNextBlock(Game *game) {

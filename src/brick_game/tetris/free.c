@@ -23,34 +23,17 @@ void freeField(Field *field) {
   }
 }
 
-// void freeFigure(Figure *figure) {
-//   if (figure) {
-//     if (figure->blocks) {
-//       for (int i = 0; i < FIGURE_HEIGHT; i++) {
-//         if (figure->blocks[i]) {
-//           free(figure->blocks[i]);
-//         }
-//       }
-//       free(figure->blocks);
-//     }
-//     free(figure);
-//   }
-// }
-
 void freeFigure(Figure *figure) {
   if (figure) {
-    if (figure->blocks != NULL) {
+    if (figure->blocks) {
       for (int i = 0; i < FIGURE_HEIGHT; i++) {
         if (figure->blocks[i]) {
           free(figure->blocks[i]);
-          figure->blocks[i] = NULL; // Обнуляем указатель после освобождения
         }
       }
       free(figure->blocks);
-      figure->blocks = NULL; // Обнуляем указатель
     }
     free(figure);
-    figure = NULL;
   }
 }
 

@@ -6,10 +6,11 @@ void initGui() {
   initscr();
   curs_set(0);
   start_color();
-  init_pair(1, COLOR_BLACK, COLOR_YELLOW);
+  init_color(10, 500, 500, 500);
+  init_pair(1, COLOR_BLACK, 10);
   init_pair(2, COLOR_GREEN, COLOR_GREEN);
-  init_pair(3, COLOR_YELLOW, COLOR_BLACK);
-  init_pair(4, COLOR_GREEN, COLOR_BLACK);
+  init_pair(3, COLOR_GREEN, COLOR_BLACK);
+  init_pair(4, 10, COLOR_BLACK);
   cbreak();
   noecho();
   nodelay(stdscr, TRUE);
@@ -23,17 +24,17 @@ void printGame(Game *game, struct timespec sp_start,
   printField(game);
   printFigure(game);
   printNextFigure(game);
-
   printInfo(game->gameInfo);
-  mvwprintw(stdscr, 12, 45, "x: %d\ty: %d", game->figure->x, game->figure->y);
+
   handleDelay(sp_start, sp_end, game->gameInfo->speed);
+  
   refresh();
 }
 
 void printField(Game *game) {
   for (int i = 0; i < FIELD_HEIGHT; i++) {
     for (int j = 0; j < FIELD_WIDTH; j++) {
-      int sym = game->field->blocks[i][j].block != 0 ? 2 : 1;
+      int sym = game->field->blocks[i][j].block ? 2 : 1;
       attron(COLOR_PAIR(sym));
       mvaddch(i + 3, j * 2 + 2, ' ');
       mvaddch(i + 3, j * 2 + 3, ' ');
@@ -48,8 +49,8 @@ void printFigure(Game *game) {
     for (int j = 0; j < FIGURE_WIDTH; ++j){
       if (figure->blocks[i][j].block != 0) {
         attron(COLOR_PAIR(2));
-        mvaddch(i + 3 + figure->y, j * 2 + 2 + figure->x, ' ');
-        mvaddch(i + 3 + figure->y, j * 2 + 3 + figure->x, ' ');
+        mvaddch(i + 3 + figure->y, j * 2 + 2 + figure->x * 2, ' ');
+        mvaddch(i + 3 + figure->y, j * 2 + 3 + figure->x * 2, ' ');
         attroff(COLOR_PAIR(2));
       }
       
@@ -60,22 +61,22 @@ void printFigure(Game *game) {
 void printNextFigure(Game *game) {
   for (int i = 0; i < FIGURE_HEIGHT; i++) {
     for (int j = 0; j < FIGURE_WIDTH; j++) {
-      if (game->figurest->blocks[game->gameInfo->nextID][i * FIGURE_WIDTH + j].block != 0){
-        attron(COLOR_PAIR(2));
-        mvaddch(i + 5, j * 2 + 28, ' ');
-        mvaddch(i + 5, j * 2 + 29, ' ');
-        attroff(COLOR_PAIR(2));
-      }
+      int num = game->figurest->blocks[game->gameInfo->nextID][i * FIGURE_WIDTH + j].block ? 2 : 3;
+      attron(COLOR_PAIR(num));
+      mvaddch(i + 5, j * 2 + 28, ' ');
+      mvaddch(i + 5, j * 2 + 29, ' ');
+      attroff(COLOR_PAIR(num));
+
     }
   }
 }
 
 void printInfo(GameInfo *gameInfo) {
-  attron(COLOR_PAIR(3));
-  mvwprintw(stdscr, 1, 10, "TETRIS");
-  attroff(COLOR_PAIR(3));
-
   attron(COLOR_PAIR(4));
+  mvwprintw(stdscr, 1, 10, "TETRIS");
+  attroff(COLOR_PAIR(4));
+
+  attron(COLOR_PAIR(3));
   mvwprintw(stdscr, 3, 26, "Next figure:");
   mvwprintw(stdscr, 11, 26, "Lvl: %d", gameInfo->level);
   mvwprintw(stdscr, 13, 26, "Speed: %d", gameInfo->speed);
@@ -86,9 +87,9 @@ void printInfo(GameInfo *gameInfo) {
   mvwprintw(stdscr, 19, 26, "nextID: %d", gameInfo->nextID);
 
   if (gameInfo->pause) mvwprintw(stdscr, 12, 2, "Press ENTER to play.");
-  attroff(COLOR_PAIR(4));
-  attron(COLOR_PAIR(5));
-  // mvwprintw(stdscr, 3, 42, "Press:");
+  if (gameInfo->state == GameOver) mvwprintw(stdscr, 12, 2, "      GameOver      ");
+  attroff(COLOR_PAIR(3));
+  attron(COLOR_PAIR(4));
   mvwprintw(stdscr, 3, 45, "Start: 'Enter'");
   mvwprintw(stdscr, 4, 45, "Pause: 'p'");
   mvwprintw(stdscr, 5, 45, "Exit: 'q'");
@@ -96,7 +97,7 @@ void printInfo(GameInfo *gameInfo) {
   mvwprintw(stdscr, 7, 45, "Space to rotate");
   mvwprintw(stdscr, 8, 45, "Arrow down to plant: 's'");
   mvwprintw(stdscr, 10, 45, "%d", gameInfo->state);
-  attroff(COLOR_PAIR(5));
+  attroff(COLOR_PAIR(4));
 }
 
 void handleDelay(struct timespec sp_start, struct timespec sp_end,
@@ -113,17 +114,17 @@ void handleDelay(struct timespec sp_start, struct timespec sp_end,
 void getActions(Game *game) {
   char ch = getch();
   switch (ch) {
-    case 'w':
+    case ' ':
       game->player->action = ROTATE;
       break;
-    case 's':
+    case 66:
       game->player->action = DOWN;
       break;
-    case 'a':
-      game->player->action = LEFT;
-      break;
-    case 'd':
+    case 67:
       game->player->action = RIGHT;
+      break;
+    case 68:
+      game->player->action = LEFT;
       break;
     case '\n':
       game->player->action = START;

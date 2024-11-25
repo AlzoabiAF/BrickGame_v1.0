@@ -14,12 +14,13 @@
 #define TICKS 30
 
 typedef enum GameState {
-  Start, //
-  Pause,//
-  Spawn,//
-  Moving,//
-  Collision,//
-  GameOver//
+  Start,
+  Pause,
+  Spawn,
+  Moving,
+  Collision,
+  GameOver,
+  Quit
 } GameState;
 
 typedef enum UserAction {
@@ -92,20 +93,27 @@ void freeGameInfo(GameInfo *gameInfo);
 void freeField(Field *field);
 void freeFigure(Figure *figure);
 void freeFiguresT(FiguresT *figureT);
-void freePrintField(int **print_field);
 void freeNextBlock(int **next);
 
 // highScore
 void saveHighScore(int high_score);
 int loadHighScore();
 
+//move figure
+void upFigure(Figure *figure);
+void downFigure(Figure *figure);
+void leftFigure(Figure *figure);
+void rightFigure(Figure *figure);
+Figure *rotationFigure(Game *game);
+
 //logic
+bool inField(int fx, int fy);
 void dropNewFigure(Game *game);
 void updateCurrentState(Game *game);
 void calculate(Game *game);
 void calcOne(Game *game);
 bool collision(Game *game);
-int eraseLines(Game *game);
+int eraseLines(Field *field);
 bool lineFilled(int i, Field *field);
 void dropLine(int i, Field *field);
 void pause(Game *game);
@@ -114,7 +122,6 @@ void up(Game *game);
 void down(Game *game);
 void left(Game *game);
 void right(Game *game);
-Figure *rotationFigure(Game *game);
 void plantFigure(Game *game);
 void countScore(Game *game);
 
