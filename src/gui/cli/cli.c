@@ -84,7 +84,6 @@ void printInfo(GameInfo *gameInfo) {
   mvwprintw(stdscr, 17, 26, "nextID: %d", gameInfo->nextID);
   clrtoeol();
   mvwprintw(stdscr, 17, 26, "High score: %d", gameInfo->high_score);
-  mvwprintw(stdscr, 19, 26, "nextID: %d", gameInfo->nextID);
 
   if (gameInfo->pause) mvwprintw(stdscr, 12, 2, "Press ENTER to play.");
   if (gameInfo->state == GameOver) mvwprintw(stdscr, 12, 2, "      GameOver      ");
@@ -96,7 +95,6 @@ void printInfo(GameInfo *gameInfo) {
   mvwprintw(stdscr, 6, 45, "Arrows to move: 'a' 'd'");
   mvwprintw(stdscr, 7, 45, "Space to rotate");
   mvwprintw(stdscr, 8, 45, "Arrow down to plant: 's'");
-  mvwprintw(stdscr, 10, 45, "%d", gameInfo->state);
   attroff(COLOR_PAIR(4));
 }
 
